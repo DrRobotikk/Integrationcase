@@ -1,0 +1,16 @@
+{
+    "person": [
+        {
+           "name": "Arne",
+           "owner_id": "1",
+           "org_id": "1",
+           "add_time": "2025-10-13T00:00:00Z", 
+           "update_time": "2025-10-13T00:00:00Z",
+           "emails" : ["arne@arne.com"],
+           "phones": ["+7490909090"],
+           "visible_to": "2",
+           "label_ids": "3",
+           "marketing_status":"subsribed"
+        }
+    ]
+}
