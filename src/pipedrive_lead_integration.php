@@ -80,7 +80,7 @@ function sendPipedriveRequest(string $end_point, array $data, string $version = 
     $result = json_decode($output, true);
 
     if (isset($result['success']) && $result['success'] === true) {
-        addLog( 'Request successful. added' . $end_point . PHP_EOL);
+        addLog( 'Request successful. added' .print_r($result,true). 'to ' . $end_point . PHP_EOL);
         return $result['data'];
     } else {
         addLog( 'Error: ' . ($result['error'] ?? 'Unknown error') . PHP_EOL);
@@ -110,8 +110,45 @@ function createLead(array $lead){
 
 } 
 
+function buildPersonWithCustomFields(array $personData){
+    global $list_of_contact_types;
+    $contact_type_id = "c0b071d74d13386af76f5681194fd8cd793e6020";
+    $person = [
+        'name' => $personData['name'] ?? '',
+        'emails' => $personData['emails'] ?? '',
+        'phones' => $personData['phones'] ?? '',
+        'org_id' => $personData['org_id'] ?? null,
+        'visible_to' => $personData['visible_to'],
+        'custom_fields' => [
+            $contact_type_id => $list_of_contact_types[$personData['custom_fields']['contact_type']] ?? null
+        ]
+    ];
+
+    return $person;
+}
+function buildLeadWithCustomFields(array $leadData){
+    global $list_of_housing_types, $list_of_deal_types;
+    $housing_type_id = "35c4e320a6dee7094535c0fe65fd9e748754a171";
+    $deal_type_id = "761dd27362225e433e1011b3bd4389a48ae4a412";
+    $property_size_id = "533158ca6c8a97cc1207b273d5802bd4a074f887";
+
+    $lead = [
+        'title' => $leadData['title'] ?? '',
+        'value' => $leadData['value'] ?? 0,
+        'person_id' => $leadData['person_id'] ?? null,
+        'organization_id' => $leadData['organization_id'] ?? null,
+        'visible_to' => $leadData['visible_to'],
+        $housing_type_id => $list_of_housing_types[$leadData['custom_fields']['housing_type']] ?? null,
+        $property_size_id => $leadData['custom_fields']['property_size'] ?? null,
+        $deal_type_id => $list_of_deal_types[$leadData['custom_fields']['deal_type']] ?? null
+        
+    ];
+
+    return $lead;
+}
+
 function main(){
-    global $jsonFile, $list_of_contact_types, $list_of_housing_types, $list_of_deal_types;
+    global $jsonFile, $list_of_housing_types, $list_of_deal_types;
 
     try {
         $data = loadJsonData($jsonFile);
@@ -125,15 +162,15 @@ function main(){
     $lead = $data['lead'][0] ?? null;
 
     $org_id = createOrganisation($organisation);
+
     $person['org_id'] = $org_id;
-    $person['custom_fields']['contact_type'] = $list_of_contact_types[$person['custom_fields']['contact_type']] ?? null;
+    $person = buildPersonWithCustomFields($person);
 
     $person_id = createPerson($person);
 
     $lead['person_id'] = $person_id;
     $lead['organization_id'] = $org_id;
-    $lead['custom_fields']['housing_type'] = $list_of_housing_types[$lead['custom_fields']['housing_type']] ?? null;
-    $lead['custom_fields']['deal_type'] = $list_of_deal_types[$lead['custom_fields']['deal_type']] ?? null;
+    $lead = buildLeadWithCustomFields($lead);
     createLead($lead);
 
 
@@ -141,8 +178,5 @@ function main(){
 }
 
 main();
-
-
-
 
 ?>
