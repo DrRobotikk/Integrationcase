@@ -83,7 +83,7 @@ function sendPipedriveRequest(string $end_point, array $data, string $version = 
         addLog( 'Request successful. added' .print_r($result,true). 'to ' . $end_point . PHP_EOL);
         return $result['data'];
     } else {
-        addLog( 'Error: ' . ($result['error'] ?? 'Unknown error') . PHP_EOL);
+        addLog( 'Error: ' . ($result['error'] . $result['error_info'] ?? 'Unknown error') . PHP_EOL);
         return null;
     }
 }
