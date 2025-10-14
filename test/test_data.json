@@ -1,16 +1,83 @@
 {
     "person": [
         {
-           "name": "Arne",
-           "owner_id": "1",
-           "org_id": "1",
+           "name": "Arne motdøra",
+           "owner_id": "",
+           "org_id": "",
            "add_time": "2025-10-13T00:00:00Z", 
            "update_time": "2025-10-13T00:00:00Z",
-           "emails" : ["arne@arne.com"],
-           "phones": ["+7490909090"],
-           "visible_to": "2",
-           "label_ids": "3",
-           "marketing_status":"subsribed"
+           "emails" :[ {
+                "value": "arnejobb@jobb.blank",
+                "primary": true,
+                "label": "work"
+            },
+            {
+                "value":"arnehjem@hjemme.ork",
+                "primary": false,
+                "label": "home"
+            }
+        ],
+           "phones": [
+            {
+                "value": "12345",
+                "primary": true,
+                "label": "work"
+            },
+            {
+                "value":"54321",
+                "primary":false,
+                "label":"home"
+            }
+           ],
+           "visible_to": "7",
+           "label_ids": ["1","2"],
+           "marketing_status":"subsribed",
+           "custom_fields": {
+                "contact_type": "Privat"
+           }
+        }
+    ],
+    "organization": [
+        {
+            "name": "Harkat groll og co AS",
+            "owner_id": "",
+            "add_time": "2025-10-13T00:00:00Z",
+            "update_time":"2025-10-13T00:00:00Z",
+            "visible_to": "7", 
+            "label_ids": ["2","3"],
+            "address": {
+                "value": "1337 bortider",
+                "country":"Langvekkistan",
+                "admin_area_level_1": "LV",
+                "admin_area_level_2": "Langvekk",
+                "locality": "Lange",
+                "sublocality": "nedgata",
+                "route": "bortider",
+                "street_number": "1337",
+                "postal_code": "42069"
+            }
+        }
+    ],
+    "lead":[
+        {
+            "title": "Dyr strøm",
+            "owner_id": "",
+            "label_ids": ["1","3"],
+            "person_id" : "",
+            "organization_id": "",
+            "value": {
+                "value": "420",
+                "currency":"JPY"
+            },
+            "expected_close_date": "",
+            "visible_to": "7",
+            "custom_fields":{
+                 "housing_type": "Hytte",
+                 "property_size": "160",
+                 "deal_type": "Fastpris"
+
+            }
+           
         }
     ]
 }
