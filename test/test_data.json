@@ -2,10 +2,7 @@
     "person": [
         {
            "name": "Arne motdøra",
-           "owner_id": "",
-           "org_id": "",
            "add_time": "2025-10-13T00:00:00Z", 
-           "update_time": "2025-10-13T00:00:00Z",
            "emails" :[ {
                 "value": "arnejobb@jobb.blank",
                 "primary": true,
@@ -29,9 +26,7 @@
                 "label":"home"
             }
            ],
-           "visible_to": "7",
-           "label_ids": ["1","2"],
-           "marketing_status":"subsribed",
+           "visible_to": 7,
            "custom_fields": {
                 "contact_type": "Privat"
            }
@@ -40,11 +35,8 @@
     "organization": [
         {
             "name": "Harkat groll og co AS",
-            "owner_id": "",
             "add_time": "2025-10-13T00:00:00Z",
-            "update_time":"2025-10-13T00:00:00Z",
-            "visible_to": "7", 
-            "label_ids": ["2","3"],
+            "visible_to": 7, 
             "address": {
                 "value": "1337 bortider",
                 "country":"Langvekkistan",
@@ -61,19 +53,16 @@
     "lead":[
         {
             "title": "Dyr strøm",
-            "owner_id": "",
-            "label_ids": ["1","3"],
-            "person_id" : "",
             "organization_id": "",
             "value": {
-                "value": "420",
+                "amount": 420,
                 "currency":"JPY"
             },
-            "expected_close_date": "",
+            "expected_close_date": null,
             "visible_to": "7",
             "custom_fields":{
                  "housing_type": "Hytte",
-                 "property_size": "160",
+                 "property_size": 160,
                  "deal_type": "Fastpris"
 
             }
