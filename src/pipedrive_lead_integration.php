@@ -80,7 +80,7 @@ function sendPipedriveRequest(string $end_point, array $data, string $version = 
     $result = json_decode($output, true);
 
     if (isset($result['success']) && $result['success'] === true) {
-        addLog( 'Request successful. added' .print_r($result,true). 'to ' . $end_point . PHP_EOL);
+        addLog( 'Request successful. added ' .print_r($result,true). 'to ' . $end_point . PHP_EOL);
         return $result['data'];
     } else {
         addLog( 'Error: ' . ($result['error'] . $result['error_info'] ?? 'Unknown error') . PHP_EOL);
@@ -115,12 +115,23 @@ function buildPersonWithCustomFields(array $personData){
     $contact_type_id = "c0b071d74d13386af76f5681194fd8cd793e6020";
     $person = [
         'name' => $personData['name'] ?? '',
-        'emails' => $personData['emails'] ?? '',
-        'phones' => $personData['phones'] ?? '',
+        'emails' => isset($personData['email']) && $personData['email'] !== ''
+            ? [[
+                'value' => $personData['email'],
+                'primary' => true,
+                'label' => 'work'
+            ]]
+            : [],
+        'phones' => isset($personData['phone']) && $personData['phone'] !== ''
+            ? [[
+                'value' => $personData['phone'],
+                'primary' => true,
+                'label' => 'work'
+            ]]
+            : [],
         'org_id' => $personData['org_id'] ?? null,
-        'visible_to' => $personData['visible_to'],
         'custom_fields' => [
-            $contact_type_id => $list_of_contact_types[$personData['custom_fields']['contact_type']] ?? null
+            $contact_type_id => $list_of_contact_types[$personData['contact_type']] ?? null
         ]
     ];
 
@@ -133,14 +144,12 @@ function buildLeadWithCustomFields(array $leadData){
     $property_size_id = "533158ca6c8a97cc1207b273d5802bd4a074f887";
 
     $lead = [
-        'title' => $leadData['title'] ?? '',
-        'value' => $leadData['value'] ?? 0,
+        'title' => 'Strøm avtale til '.$leadData['name'] ?? '',
         'person_id' => $leadData['person_id'] ?? null,
         'organization_id' => $leadData['organization_id'] ?? null,
-        'visible_to' => $leadData['visible_to'],
-        $housing_type_id => $list_of_housing_types[$leadData['custom_fields']['housing_type']] ?? null,
-        $property_size_id => $leadData['custom_fields']['property_size'] ?? null,
-        $deal_type_id => $list_of_deal_types[$leadData['custom_fields']['deal_type']] ?? null
+        $housing_type_id => $list_of_housing_types[$leadData['housing_type']] ?? null,
+        $property_size_id => $leadData['property_size'] ?? null,
+        $deal_type_id => $list_of_deal_types[$leadData['deal_type']] ?? null
         
     ];
 
@@ -157,19 +166,18 @@ function main(){
         return;
     }
 
-    $person = $data['person'][0] ?? null;
     $organisation = $data['organization'][0] ?? null;
     $lead = $data['lead'][0] ?? null;
 
     $org_id = createOrganisation($organisation);
 
-    $person['org_id'] = $org_id;
-    $person = buildPersonWithCustomFields($person);
+    $lead['org_id'] = $org_id;
+
+    $person = buildPersonWithCustomFields($lead);
 
     $person_id = createPerson($person);
 
     $lead['person_id'] = $person_id;
-    $lead['organization_id'] = $org_id;
     $lead = buildLeadWithCustomFields($lead);
     createLead($lead);
 
