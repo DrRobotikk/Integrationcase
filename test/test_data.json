@@ -1,36 +1,15 @@
 {
-    "person": [
+    "lead": [
         {
-           "name": "Arne motdøra",
-           "add_time": "2025-10-13T00:00:00Z", 
-           "emails" :[ {
-                "value": "arnejobb@jobb.blank",
-                "primary": true,
-                "label": "work"
-            },
-            {
-                "value":"arnehjem@hjemme.ork",
-                "primary": false,
-                "label": "home"
-            }
-        ],
-           "phones": [
-            {
-                "value": "12345",
-                "primary": true,
-                "label": "work"
-            },
-            {
-                "value":"54321",
-                "primary":false,
-                "label":"home"
-            }
-           ],
-           "visible_to": 7,
-           "custom_fields": {
-                "contact_type": "Privat"
-           }
+            "name": "ole tullkatt",
+            "phone": "87654321",
+            "email": "ole.tullkatt@katta.no",
+            "housing_type": "Enebolig",
+            "property_size": 180,
+            "deal_type": "Fastpris",
+            "contact_type": "Bedrift"
         }
+        
     ],
     "organization": [
         {
@@ -49,24 +28,6 @@
                 "postal_code": "42069"
             }
         }
-    ],
-    "lead":[
-        {
-            "title": "Dyr strøm",
-            "organization_id": "",
-            "value": {
-                "amount": 420,
-                "currency":"JPY"
-            },
-            "expected_close_date": null,
-            "visible_to": "7",
-            "custom_fields":{
-                 "housing_type": "Hytte",
-                 "property_size": 160,
-                 "deal_type": "Fastpris"
-
-            }
-           
-        }
     ]
+    
 }
